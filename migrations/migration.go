@@ -12,11 +12,11 @@ type Migration struct {
 	AppliedAt int64
 }
 
-var migrations = []struct {
+var migrations []struct {
 	version string
 	up      func(*gorm.DB) error
 	down    func(*gorm.DB) error
-}{}
+}
 
 func registerMigration(version string, up, down func(*gorm.DB) error) {
 	migrations = append(migrations, struct {
