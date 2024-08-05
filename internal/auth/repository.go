@@ -1,8 +1,7 @@
 package auth
 
 import (
-	"database/sql"
-	"errors"
+	"gorm.io/gorm"
 )
 
 type Repository interface {
@@ -11,31 +10,19 @@ type Repository interface {
 }
 
 type PostgresRepository struct {
-	DB *sql.DB
+	DB *gorm.DB
 }
 
-func NewPostgresRepository(db *sql.DB) *PostgresRepository {
+func NewPostgresRepository(db *gorm.DB) *PostgresRepository {
 	return &PostgresRepository{DB: db}
 }
 
 func (r *PostgresRepository) CreateUser(user *User) error {
-	query := `INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id`
-	err := r.DB.QueryRow(query, user.Username, user.Email, user.Password).Scan(&user.ID)
-	if err != nil {
-		return err
-	}
-	return nil
+	return r.DB.Create(user).Error
 }
 
 func (r *PostgresRepository) GetUserByEmail(email string) (*User, error) {
-	user := &User{}
-	query := `SELECT id, username, email, password FROM users WHERE email = $1`
-	err := r.DB.QueryRow(query, email).Scan(&user.ID, &user.Username, &user.Email, &user.Password)
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, errors.New("user not found")
-		}
-		return nil, err
-	}
-	return user, nil
+	var user User
+	err := r.DB.Where("email = ?", email).First(&user).Error
+	return &user, err
 }
