@@ -9,7 +9,7 @@ import (
 func main() {
 	app := fiber.New()
 
-	if err := bootstrap.SetupApp(app); err != nil {
+	if err := bootstrap.Run(app); err != nil {
 		log.Fatalf("Error setting up app: %v", err)
 	}
 
