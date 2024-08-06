@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ### Post a new menu item
 POST http://localhost:8080/api/menu
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTcyMzAzNDkyMn0.qxK2gv9zlUkPiYDSGlJ1Q1nweKUq3VfanoZi_yon4qE
 Content-Type: application/json
 
 {
@@ -31,15 +31,15 @@ Content-Type: application/json
 
 ### Get ID 1 menu item
 GET http://localhost:8080/api/menu/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTcyMzAzNDkyMn0.qxK2gv9zlUkPiYDSGlJ1Q1nweKUq3VfanoZi_yon4qE
 
 ### Get all menu items
 GET http://localhost:8080/api/menu
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTcyMzAzNDkyMn0.qxK2gv9zlUkPiYDSGlJ1Q1nweKUq3VfanoZi_yon4qE
 
 ### Update menu item
 PUT http://localhost:8080/api/menu/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTcyMzAzNDkyMn0.qxK2gv9zlUkPiYDSGlJ1Q1nweKUq3VfanoZi_yon4qE
 Content-Type: application/json
 
 {
@@ -51,4 +51,35 @@ Content-Type: application/json
 
 ### Delete menu item
 DELETE http://localhost:8080/api/menu/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTcyMzAzNDkyMn0.qxK2gv9zlUkPiYDSGlJ1Q1nweKUq3VfanoZi_yon4qE
+
+### Create a new order
+POST http://localhost:8080/api/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTcyMzAzNDkyMn0.qxK2gv9zlUkPiYDSGlJ1Q1nweKUq3VfanoZi_yon4qE
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "menu_item_id": 1,
+      "quantity": 2
+    },
+    {
+      "menu_item_id": 3,
+      "quantity": 1
+    }
+  ]
+}
+
+### Get order by ID
+GET http://localhost:8080/api/order/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTcyMzAzNDkyMn0.qxK2gv9zlUkPiYDSGlJ1Q1nweKUq3VfanoZi_yon4qE
+
+### Update order status
+PUT http://localhost:8080/api/order/4?status=cancelled
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTcyMzAzNDkyMn0.qxK2gv9zlUkPiYDSGlJ1Q1nweKUq3VfanoZi_yon4qE
+Content-Type: application/json
+
+### List all orders
+GET http://localhost:8080/api/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImV4cCI6MTcyMzAzNDkyMn0.qxK2gv9zlUkPiYDSGlJ1Q1nweKUq3VfanoZi_yon4qE

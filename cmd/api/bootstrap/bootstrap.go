@@ -10,35 +10,47 @@ import (
 	"restaurant-order-system/internal/auth"
 	"restaurant-order-system/internal/menu"
 	"restaurant-order-system/internal/middleware"
+	"restaurant-order-system/internal/order"
 	"restaurant-order-system/migrations"
 )
 
 type RegisterDependencies struct {
-	authRepo    auth.Repository
-	menuRepo    menu.Repository
-	authService auth.Service
-	menuService menu.Service
-	authHandler *auth.Handler
-	menuHandler *menu.Handler
+	authRepo  auth.Repository
+	menuRepo  menu.Repository
+	orderRepo order.Repository
+
+	authService  auth.Service
+	menuService  menu.Service
+	orderService order.Service
+
+	authHandler  *auth.Handler
+	menuHandler  *menu.Handler
+	orderHandler *order.Handler
 }
 
 func NewRegisterDependencies(db *gorm.DB) *RegisterDependencies {
 	authRepo := auth.NewPostgresRepository(db)
 	menuRepo := menu.NewPostgresRepository(db)
+	orderRepo := order.NewPostgresRepository(db)
 
-	authService := auth.NewAuthService(authRepo)
-	menuService := menu.NewMenuService(menuRepo)
+	authService := auth.NewServiceImpl(authRepo)
+	menuService := menu.NewServiceImpl(menuRepo)
+	orderService := order.NewServiceImpl(orderRepo, menuService)
 
 	authHandler := auth.NewHandler(authService)
 	menuHandler := menu.NewMenuHandler(menuService)
+	orderHandler := order.NewHandler(orderService)
 
 	return &RegisterDependencies{
-		authRepo:    authRepo,
-		menuRepo:    menuRepo,
-		authService: authService,
-		menuService: menuService,
-		authHandler: authHandler,
-		menuHandler: menuHandler,
+		authRepo:     authRepo,
+		menuRepo:     menuRepo,
+		orderRepo:    orderRepo,
+		authService:  authService,
+		menuService:  menuService,
+		orderService: orderService,
+		authHandler:  authHandler,
+		menuHandler:  menuHandler,
+		orderHandler: orderHandler,
 	}
 }
 
@@ -67,6 +79,10 @@ func setupRoutes(app *fiber.App, nd *RegisterDependencies) {
 	menuRoute := api.Group("/menu")
 	menuRoute.Use(middleware.AuthMiddleware("secret"))
 	menu.Routes(menuRoute, nd.menuHandler)
+
+	orderRoute := api.Group("/order")
+	orderRoute.Use(middleware.AuthMiddleware("secret"))
+	order.Routes(orderRoute, nd.orderHandler)
 }
 
 func initiateDatabase() (*gorm.DB, error) {

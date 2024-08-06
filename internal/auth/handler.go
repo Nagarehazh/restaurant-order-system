@@ -36,11 +36,3 @@ func (h *Handler) Login(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(Response{Token: token})
 }
-
-func SetupRoutes(app *fiber.App, service Service) {
-	handler := NewHandler(service)
-
-	auth := app.Group("/auth")
-	auth.Post("/register", handler.Register)
-	auth.Post("/login", handler.Login)
-}

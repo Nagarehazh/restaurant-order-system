@@ -13,26 +13,26 @@ func NewMenuHandler(service Service) *Handler {
 	return &Handler{service: service}
 }
 
-func (h *Handler) CreateMenuItem(c *fiber.Ctx) error {
-	var req MenuItem
+func (h *Handler) CreateItem(c *fiber.Ctx) error {
+	var req Item
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request"})
 	}
 
-	if err := h.service.CreateMenuItem(&req); err != nil {
+	if err := h.service.CreateItem(&req); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create menu item"})
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"message": "Menu item created successfully"})
 }
 
-func (h *Handler) GetMenuItem(c *fiber.Ctx) error {
+func (h *Handler) GetItem(c *fiber.Ctx) error {
 	id := c.Params("id")
 	idParsed, err := strconv.ParseUint(id, 10, 64)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
 	}
-	item, err := h.service.GetMenuItem(uint(idParsed))
+	item, err := h.service.GetItem(uint(idParsed))
 	if err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Menu item not found"})
 	}
@@ -40,18 +40,18 @@ func (h *Handler) GetMenuItem(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(item)
 }
 
-func (h *Handler) UpdateMenuItem(c *fiber.Ctx) error {
+func (h *Handler) UpdateItem(c *fiber.Ctx) error {
 	id := c.Params("id")
 	idParsed, err := strconv.ParseUint(id, 10, 64)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
 	}
-	item, err := h.service.GetMenuItem(uint(idParsed))
+	item, err := h.service.GetItem(uint(idParsed))
 	if err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Menu item not found"})
 	}
 
-	var req MenuItem
+	var req Item
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request"})
 	}
@@ -60,28 +60,28 @@ func (h *Handler) UpdateMenuItem(c *fiber.Ctx) error {
 	item.Price = req.Price
 	item.Description = req.Description
 
-	if err := h.service.UpdateMenuItem(item); err != nil {
+	if err := h.service.UpdateItem(item); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update menu item"})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Menu item updated successfully"})
 }
 
-func (h *Handler) DeleteMenuItem(c *fiber.Ctx) error {
+func (h *Handler) DeleteItem(c *fiber.Ctx) error {
 	id := c.Params("id")
 	idParsed, err := strconv.ParseUint(id, 10, 64)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
 	}
-	if err := h.service.DeleteMenuItem(uint(idParsed)); err != nil {
+	if err := h.service.DeleteItem(uint(idParsed)); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete menu item"})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Menu item deleted successfully"})
 }
 
-func (h *Handler) ListMenuItems(c *fiber.Ctx) error {
-	items, err := h.service.ListMenuItems()
+func (h *Handler) ListItems(c *fiber.Ctx) error {
+	items, err := h.service.ListItems()
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to list menu items"})
 	}

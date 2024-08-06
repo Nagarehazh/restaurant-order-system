@@ -1,37 +1,51 @@
 package menu
 
+import (
+	"errors"
+	"gorm.io/gorm"
+)
+
+var ErrMenuItemNotFound = errors.New("menu item not found")
+
 type Service interface {
-	CreateMenuItem(req *MenuItem) error
-	GetMenuItem(id uint) (*MenuItem, error)
-	UpdateMenuItem(req *MenuItem) error
-	DeleteMenuItem(id uint) error
-	ListMenuItems() ([]MenuItem, error)
+	CreateItem(req *Item) error
+	GetItem(id uint) (*Item, error)
+	UpdateItem(req *Item) error
+	DeleteItem(id uint) error
+	ListItems() ([]Item, error)
 }
 
-type MenuService struct {
+type ServiceImpl struct {
 	repo Repository
 }
 
-func NewMenuService(repo Repository) Service {
-	return &MenuService{repo: repo}
+func NewServiceImpl(repo Repository) Service {
+	return &ServiceImpl{repo: repo}
 }
 
-func (s *MenuService) CreateMenuItem(item *MenuItem) error {
-	return s.repo.CreateMenuItem(item)
+func (s *ServiceImpl) CreateItem(item *Item) error {
+	return s.repo.CreateItem(item)
 }
 
-func (s *MenuService) GetMenuItem(id uint) (*MenuItem, error) {
-	return s.repo.GetMenuItem(id)
+func (s *ServiceImpl) GetItem(id uint) (*Item, error) {
+	item, err := s.repo.GetItem(id)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrMenuItemNotFound
+		}
+		return nil, err
+	}
+	return item, nil
 }
 
-func (s *MenuService) UpdateMenuItem(item *MenuItem) error {
-	return s.repo.UpdateMenuItem(item)
+func (s *ServiceImpl) UpdateItem(item *Item) error {
+	return s.repo.UpdateItem(item)
 }
 
-func (s *MenuService) DeleteMenuItem(id uint) error {
-	return s.repo.DeleteMenuItem(id)
+func (s *ServiceImpl) DeleteItem(id uint) error {
+	return s.repo.DeleteItem(id)
 }
 
-func (s *MenuService) ListMenuItems() ([]MenuItem, error) {
-	return s.repo.ListMenuItems()
+func (s *ServiceImpl) ListItems() ([]Item, error) {
+	return s.repo.ListItems()
 }

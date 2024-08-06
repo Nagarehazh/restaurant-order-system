@@ -12,15 +12,15 @@ type Service interface {
 	Login(req LoginRequest) (string, error)
 }
 
-type AuthService struct {
+type ServiceImpl struct {
 	repo Repository
 }
 
-func NewAuthService(repo Repository) Service {
-	return &AuthService{repo: repo}
+func NewServiceImpl(repo Repository) Service {
+	return &ServiceImpl{repo: repo}
 }
 
-func (s *AuthService) Register(req RegisterRequest) error {
+func (s *ServiceImpl) Register(req RegisterRequest) error {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
@@ -35,7 +35,7 @@ func (s *AuthService) Register(req RegisterRequest) error {
 	return s.repo.CreateUser(user)
 }
 
-func (s *AuthService) Login(req LoginRequest) (string, error) {
+func (s *ServiceImpl) Login(req LoginRequest) (string, error) {
 	user, err := s.repo.GetUserByEmail(req.Email)
 	if err != nil {
 		return "", err
@@ -46,6 +46,7 @@ func (s *AuthService) Login(req LoginRequest) (string, error) {
 	}
 
 	claims := &JWTClaim{
+		ID:       user.ID,
 		Username: user.Username,
 		Email:    user.Email,
 		RegisteredClaims: jwt.RegisteredClaims{
