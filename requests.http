@@ -17,5 +17,38 @@ Content-Type: application/json
   "password": "password123"
 }
 
-###
+### Post a new menu item
+POST http://localhost:8080/api/menu
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
+Content-Type: application/json
 
+{
+  "name": "Hamburguesa Clásica",
+  "description": "Deliciosa hamburguesa con carne de res, lechuga, tomate y queso",
+  "price": 9.99,
+  "category": "Plato Principal"
+}
+
+### Get ID 1 menu item
+GET http://localhost:8080/api/menu/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
+
+### Get all menu items
+GET http://localhost:8080/api/menu
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
+
+### Update menu item
+PUT http://localhost:8080/api/menu/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
+Content-Type: application/json
+
+{
+  "name": "Hamburguesa Tradicional",
+  "description": "Deliciosa hamburguesa con carne de res, lechuga, tomate, queso y cebolla",
+  "price": 9.99,
+  "category": "Plato Principal"
+}
+
+### Delete menu item
+DELETE http://localhost:8080/api/menu/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzIzMDI4Njk2fQ.56criS_5xMJ-00x-UH60fGstINzkl6wGLPo3JZqv8HE
