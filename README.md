@@ -1,5 +1,21 @@
 # Restaurant Order System
 
+## Description
+This project is a backend for a restaurant order management system. It provides APIs for user authentication, menu management, and order processing.
+
+## Features
+- User authentication (registration, login)
+- CRUD operations for menu items
+- Order creation and management
+- Integration with PostgreSQL database
+
+## Technologies Used
+- Go (version 1.22 or higher)
+- Fiber (web framework)
+- GORM (ORM for Go)
+- PostgreSQL
+- Docker and Docker Compose
+
 ## Docker Commands
 
 ### Build and Start Services

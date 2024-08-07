@@ -1,6 +1,7 @@
 package migrations
 
 import (
+	"errors"
 	"fmt"
 	"gorm.io/gorm"
 	"sort"
@@ -37,7 +38,7 @@ func Migrate(db *gorm.DB) error {
 
 	for _, m := range migrations {
 		var executed Migration
-		if err := db.Where("version = ?", m.version).First(&executed).Error; err == gorm.ErrRecordNotFound {
+		if err := db.Where("version = ?", m.version).First(&executed).Error; errors.Is(err, gorm.ErrRecordNotFound) {
 			fmt.Printf("Running migration: %s\n", m.version)
 			if err := m.up(db); err != nil {
 				return fmt.Errorf("failed to run migration %s: %w", m.version, err)
