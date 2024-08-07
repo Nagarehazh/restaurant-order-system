@@ -4,6 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/healthcheck"
+	"github.com/gofiber/fiber/v2/middleware/helmet"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
@@ -71,6 +75,13 @@ func Run(app *fiber.App) error {
 }
 
 func setupRoutes(app *fiber.App, nd *RegisterDependencies) {
+	app.Use(logger.New())
+	app.Use(helmet.New())
+	app.Use(cors.New())
+	app.Use(healthcheck.New(healthcheck.Config{
+		LivenessEndpoint: "/health-check",
+	}))
+
 	api := app.Group("/api")
 
 	authRoute := api.Group("/auth")
