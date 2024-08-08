@@ -14,7 +14,7 @@ import (
 	"restaurant-order-system/internal/server/middleware"
 )
 
-func SetupRoutes(app *fiber.App, nd *Dependencies) {
+func SetupRoutes(app *fiber.App, d *Dependencies) {
 	app.Use(logger.New())
 	app.Use(helmet.New())
 	app.Use(cors.New())
@@ -28,13 +28,13 @@ func SetupRoutes(app *fiber.App, nd *Dependencies) {
 	api := app.Group("/api")
 
 	authRoute := api.Group("/auth")
-	auth2.Routes(authRoute, nd.authHandler)
+	auth2.Routes(authRoute, d.authHandler)
 
 	menuRoute := api.Group("/menu")
 	menuRoute.Use(middleware.AuthMiddleware("secret"))
-	menu2.Routes(menuRoute, nd.menuHandler)
+	menu2.Routes(menuRoute, d.menuHandler)
 
 	orderRoute := api.Group("/order")
 	orderRoute.Use(middleware.AuthMiddleware("secret"))
-	order2.Routes(orderRoute, nd.orderHandler)
+	order2.Routes(orderRoute, d.orderHandler)
 }
