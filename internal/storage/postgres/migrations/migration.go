@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"gorm.io/gorm"
+	"log"
 	"sort"
 )
 
@@ -17,6 +18,15 @@ var migrations []struct {
 	version string
 	up      func(*gorm.DB) error
 	down    func(*gorm.DB) error
+}
+
+func Run(db *gorm.DB) error {
+	if err := Migrate(db); err != nil {
+		return errors.New("failed to run migrations")
+	}
+
+	log.Println("Migrations run successfully")
+	return nil
 }
 
 func registerMigration(version string, up, down func(*gorm.DB) error) {

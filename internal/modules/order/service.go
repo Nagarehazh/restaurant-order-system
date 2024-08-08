@@ -2,7 +2,7 @@ package order
 
 import (
 	"errors"
-	"restaurant-order-system/internal/menu"
+	"restaurant-order-system/internal/modules/menu"
 )
 
 type Service interface {

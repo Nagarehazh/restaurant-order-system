@@ -3,7 +3,7 @@ package middleware
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
-	"restaurant-order-system/internal/auth"
+	"restaurant-order-system/internal/modules/auth"
 	"strings"
 )
 

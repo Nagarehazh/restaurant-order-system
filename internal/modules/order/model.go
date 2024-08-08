@@ -2,8 +2,8 @@ package order
 
 import (
 	"gorm.io/gorm"
-	"restaurant-order-system/internal/auth"
-	"restaurant-order-system/internal/menu"
+	"restaurant-order-system/internal/modules/auth"
+	"restaurant-order-system/internal/modules/menu"
 )
 
 type Status string

@@ -3,7 +3,7 @@ package order
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
-	"restaurant-order-system/internal/auth"
+	"restaurant-order-system/internal/modules/auth"
 )
 
 var ErrMenuItemNotFound = "menu item not found"
